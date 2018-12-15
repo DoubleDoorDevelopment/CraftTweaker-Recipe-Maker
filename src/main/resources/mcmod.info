@@ -1,0 +1,18 @@
+[
+  {
+    "modid": "mtrm",
+    "name": "MTRM",
+    "description": "You should wear a helmet when you go mining...",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      "DoubleDoorDevelopment"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
