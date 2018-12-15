@@ -50,10 +50,10 @@ import net.doubledoordev.ctrm.xml.XmlParser;
  * @author Dries007
  */
 @Mod(modid = Helper.MODID, name = Helper.NAME)
-public class MineTweakerRecipeMaker
+public class CraftTweakerRecipeMaker
 {
     @Mod.Instance(Helper.MODID)
-    public static MineTweakerRecipeMaker instance;
+    public static CraftTweakerRecipeMaker instance;
 
     @Mod.Metadata(Helper.MODID)
     private ModMetadata metadata;
