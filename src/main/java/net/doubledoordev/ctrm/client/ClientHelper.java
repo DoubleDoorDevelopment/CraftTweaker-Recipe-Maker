@@ -39,8 +39,8 @@ import org.apache.commons.io.FileUtils;
 import net.minecraft.client.gui.FontRenderer;
 
 import joptsimple.internal.Strings;
+import net.doubledoordev.ctrm.CraftTweakerRecipeMaker;
 import net.doubledoordev.ctrm.Helper;
-import net.doubledoordev.ctrm.MineTweakerRecipeMaker;
 
 /**
  * @author Dries007
@@ -123,7 +123,7 @@ public class ClientHelper
             // todo: actually download
             FileUtils.copyFile(Helper.getScriptFile(), tmpFile);
 
-            String ee = MineTweakerRecipeMaker.getExternalEditor();
+            String ee = CraftTweakerRecipeMaker.getExternalEditor();
 
             if (Strings.isNullOrEmpty(ee))
             {
@@ -136,7 +136,7 @@ public class ClientHelper
         }
         catch (Exception e)
         {
-            MineTweakerRecipeMaker.log().error("Can't download & edit.", e);
+            CraftTweakerRecipeMaker.log().error("Can't download & edit.", e);
         }
     }
 
@@ -144,13 +144,13 @@ public class ClientHelper
     {
         try
         {
-            MineTweakerRecipeMaker.log().info(FileUtils.readFileToString(tmpFile, "UTF-8"));
+            CraftTweakerRecipeMaker.log().info(FileUtils.readFileToString(tmpFile, "UTF-8"));
 
             tmpFile.delete();
         }
         catch (Exception e)
         {
-            MineTweakerRecipeMaker.log().error("Can't upload! Changes may be lost!", e);
+            CraftTweakerRecipeMaker.log().error("Can't upload! Changes may be lost!", e);
         }
     }
 }

@@ -30,7 +30,7 @@
 
 package net.doubledoordev.ctrm;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.command.CommandBase;
@@ -47,7 +47,7 @@ public class ServerCommand extends CommandBase
     @Override
     public String getName()
     {
-        return "minetweakerrecipemaker";
+        return "crafttweakerrecipemaker";
     }
 
     @Override
@@ -60,12 +60,12 @@ public class ServerCommand extends CommandBase
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
     {
         EntityPlayerMP player = getCommandSenderAsPlayer(sender);
-        player.openGui(MineTweakerRecipeMaker.instance, 0, sender.getEntityWorld(), 0, 0, 0);
+        player.openGui(CraftTweakerRecipeMaker.instance, 0, sender.getEntityWorld(), 0, 0, 0);
     }
 
     @Override
     public List<String> getAliases()
     {
-        return Collections.singletonList("ctrm");
+        return Arrays.asList("ctrm", "mtrm", "minetweakerrecipemaker");
     }
 }

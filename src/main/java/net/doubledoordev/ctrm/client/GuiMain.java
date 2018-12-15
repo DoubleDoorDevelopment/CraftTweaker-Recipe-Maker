@@ -39,8 +39,8 @@ import net.minecraft.client.gui.GuiYesNo;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.text.TextFormatting;
 
+import net.doubledoordev.ctrm.CraftTweakerRecipeMaker;
 import net.doubledoordev.ctrm.Helper;
-import net.doubledoordev.ctrm.MineTweakerRecipeMaker;
 import net.doubledoordev.ctrm.client.elements.ButtonElement;
 import net.doubledoordev.ctrm.client.elements.GuiElement;
 import net.doubledoordev.ctrm.client.parts.GuiIconButton;
@@ -68,7 +68,7 @@ public class GuiMain extends GuiListBase
     {
         if (reload)
         {
-            MineTweakerRecipeMaker.reloadConfig();
+            CraftTweakerRecipeMaker.reloadConfig();
             XmlParser.reload();
         }
         List<Root> roots = XmlParser.getLoadedRootXmls();

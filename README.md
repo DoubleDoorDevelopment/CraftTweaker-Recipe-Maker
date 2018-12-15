@@ -17,7 +17,7 @@ This mod has no relation with MineTweaker/CraftTweaker itself, and MineTweaker/C
 How to use
 ----------
 
-Command: "/mtrm" or "/minetweakerrecipemaker". (New commands will be added to match the name.)
+Command: "/mtrm", "/minetweakerrecipemaker", "/ctrm" or "/crafttweakerrecipemaker"
 
 Use tab complete to find out what types are available locally, or use no type to get a list.
 

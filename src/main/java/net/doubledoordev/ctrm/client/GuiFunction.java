@@ -33,7 +33,7 @@ package net.doubledoordev.ctrm.client;
 import net.minecraft.client.gui.GuiYesNo;
 import net.minecraft.client.gui.inventory.GuiContainer;
 
-import net.doubledoordev.ctrm.MineTweakerRecipeMaker;
+import net.doubledoordev.ctrm.CraftTweakerRecipeMaker;
 import net.doubledoordev.ctrm.client.elements.GuiElement;
 import net.doubledoordev.ctrm.client.elements.StringElement;
 import net.doubledoordev.ctrm.xml.Function;
@@ -162,7 +162,7 @@ public class GuiFunction extends GuiListBase implements GuiElement.GuiElementCal
         // do packet stuff
         // figure out place in file
         // add author + timestamp
-        MineTweakerRecipeMaker.log().info("Saved: {}", currentText);
+        CraftTweakerRecipeMaker.log().info("Saved: {}", currentText);
         this.mc.displayGuiScreen(parent);
     }
 }

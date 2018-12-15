@@ -40,8 +40,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.util.ResourceLocation;
 
+import net.doubledoordev.ctrm.CraftTweakerRecipeMaker;
 import net.doubledoordev.ctrm.Helper;
-import net.doubledoordev.ctrm.MineTweakerRecipeMaker;
 import net.doubledoordev.ctrm.client.elements.GuiElement;
 import net.doubledoordev.ctrm.xml.elements.Number;
 import net.doubledoordev.ctrm.xml.elements.*;
@@ -84,7 +84,7 @@ public final class XmlParser
                     InputSource is = null;
                     if (systemId.contains("ctrm.dtd"))
                     {
-                        InputStream iss = MineTweakerRecipeMaker.class.getResourceAsStream(Helper.DTD);
+                        InputStream iss = CraftTweakerRecipeMaker.class.getResourceAsStream(Helper.DTD);
                         is = new InputSource(iss);
                     }
                     return is;
@@ -95,21 +95,21 @@ public final class XmlParser
                 @Override
                 public void warning(SAXParseException exception) throws SAXException
                 {
-                    MineTweakerRecipeMaker.log().warn("Caught warning trying to parse XML: ", currentlyProcessing);
-                    MineTweakerRecipeMaker.log().warn("XML warning", exception);
+                    CraftTweakerRecipeMaker.log().warn("Caught warning trying to parse XML: ", currentlyProcessing);
+                    CraftTweakerRecipeMaker.log().warn("XML warning", exception);
                 }
 
                 @Override
                 public void error(SAXParseException exception) throws SAXException
                 {
-                    MineTweakerRecipeMaker.log().error("Caught error trying to parse XML: ", currentlyProcessing);
-                    MineTweakerRecipeMaker.log().error("XML error", exception);
+                    CraftTweakerRecipeMaker.log().error("Caught error trying to parse XML: ", currentlyProcessing);
+                    CraftTweakerRecipeMaker.log().error("XML error", exception);
                 }
 
                 @Override
                 public void fatalError(SAXParseException exception) throws SAXException
                 {
-                    MineTweakerRecipeMaker.log().error("Caught fatal error trying to parse XML: ", currentlyProcessing);
+                    CraftTweakerRecipeMaker.log().error("Caught fatal error trying to parse XML: ", currentlyProcessing);
                     Throwables.propagate(exception);
                 }
             });
@@ -169,10 +169,10 @@ public final class XmlParser
         {
             path += ".xml";
         }
-        InputStream is = MineTweakerRecipeMaker.class.getResourceAsStream(path);
+        InputStream is = CraftTweakerRecipeMaker.class.getResourceAsStream(path);
         if (is == null)
         {
-            is = MineTweakerRecipeMaker.class.getResourceAsStream(path.replace(".xml", ".XML"));
+            is = CraftTweakerRecipeMaker.class.getResourceAsStream(path.replace(".xml", ".XML"));
         }
         if (is == null)
         {
@@ -227,11 +227,11 @@ public final class XmlParser
         ResourceLocation key = Helper.normalize(location);
         if (DATA.containsKey(key))
         {
-            MineTweakerRecipeMaker.log().info("Loading XML from filesystem [OVERRIDING!] {} ({})", location, file);
+            CraftTweakerRecipeMaker.log().info("Loading XML from filesystem [OVERRIDING!] {} ({})", location, file);
         }
         else
         {
-            MineTweakerRecipeMaker.log().info("Loading XML from filesystem {} ({})", location, file);
+            CraftTweakerRecipeMaker.log().info("Loading XML from filesystem {} ({})", location, file);
         }
         DATA.put(key, parseRootXml(file));
     }
@@ -282,7 +282,7 @@ public final class XmlParser
             sb.append('\n');
             sb.append(e.getValue()).append('\n');
         }
-        MineTweakerRecipeMaker.log().info(sb);
+        CraftTweakerRecipeMaker.log().info(sb);
     }
 
     /**
@@ -325,9 +325,9 @@ public final class XmlParser
         }
         catch (Exception e)
         {
-            MineTweakerRecipeMaker.log().error("RELOAD FAILED WITH EXCEPTION:");
-            MineTweakerRecipeMaker.log().catching(e);
-            MineTweakerRecipeMaker.log().error("Restoring old data map!");
+            CraftTweakerRecipeMaker.log().error("RELOAD FAILED WITH EXCEPTION:");
+            CraftTweakerRecipeMaker.log().catching(e);
+            CraftTweakerRecipeMaker.log().error("Restoring old data map!");
             DATA.clear();
             RELOAD_LIST.clear();
             DATA.putAll(oldMap);
