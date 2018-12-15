@@ -1,9 +1,9 @@
-//package net.doubledoordev.mtrm.client;
+//package net.doubledoordev.ctrm.client;
 //
 //import com.google.common.collect.ImmutableList;
-//import net.doubledoordev.mtrm.MineTweakerRecipeMaker;
-//import net.doubledoordev.mtrm.client.parts.GuiIconButton;
-//import net.doubledoordev.mtrm.client.parts.Icon;
+//import net.doubledoordev.ctrm.MineTweakerRecipeMaker;
+//import net.doubledoordev.ctrm.client.parts.GuiIconButton;
+//import net.doubledoordev.ctrm.client.parts.Icon;
 //import net.minecraft.client.gui.GuiButton;
 //import net.minecraft.client.gui.GuiYesNo;
 //import net.minecraft.client.gui.GuiYesNoCallback;

@@ -1,14 +1,15 @@
 [
   {
-    "modid": "mtrm",
-    "name": "MTRM",
-    "description": "You should wear a helmet when you go mining...",
+    "modid": "ctrm",
+    "name": "CTRM",
+    "description": "Recipe editing in-game!",
     "version": "${version}",
     "mcversion": "${mcversion}",
     "url": "",
     "updateUrl": "",
     "authorList": [
-      "DoubleDoorDevelopment"
+      "DoubleDoorDevelopment",
+      "Dries007"
     ],
     "credits": "",
     "logoFile": "",

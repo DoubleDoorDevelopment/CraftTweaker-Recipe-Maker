@@ -1,4 +1,4 @@
-//package net.doubledoordev.mtrm.client;
+//package net.doubledoordev.ctrm.client;
 //
 //import net.minecraft.client.gui.GuiYesNoCallback;
 //

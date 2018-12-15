@@ -1,7 +1,7 @@
-//package net.doubledoordev.mtrm.client;
+//package net.doubledoordev.ctrm.client;
 //
 //import com.google.common.base.Predicate;
-//import net.doubledoordev.mtrm.client.parts.GuiMultilineTextField;
+//import net.doubledoordev.ctrm.client.parts.GuiMultilineTextField;
 //import net.minecraft.client.gui.GuiYesNoCallback;
 //
 //import javax.annotation.Nullable;
