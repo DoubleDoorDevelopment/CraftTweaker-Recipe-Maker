@@ -165,7 +165,7 @@ public class GuiFunction extends GuiListBase implements GuiElement.GuiElementCal
         // add author + timestamp
 
         //TODO: use function to get name and weight
-        Helper.placeAfterMarker(1000, currentText);
+        Helper.placeAfterMarker(function.weight, currentText);
         CraftTweakerRecipeMaker.log().info("Saved: {}", currentText);
         this.mc.displayGuiScreen(parent);
     }
