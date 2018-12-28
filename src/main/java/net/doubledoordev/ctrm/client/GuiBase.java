@@ -194,6 +194,7 @@ public abstract class GuiBase extends GuiContainer
     @Override
     public void handleMouseInput() throws IOException
     {
+        //TODO: This still will crash sometimes.
         super.handleMouseInput();
         int i = Mouse.getEventDWheel();
         if (i != 0 && this.needsScrolling())

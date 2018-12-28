@@ -37,6 +37,7 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import joptsimple.internal.Strings;
 import net.doubledoordev.ctrm.CraftTweakerRecipeMaker;
@@ -99,8 +100,10 @@ public class ClientHelper
     public static void drawSplit(FontRenderer renderer, String text, int width, final int color, int x, int y)
     {
         List<String> lines = split(renderer, text, width);
-        renderer.posX = x;
-        renderer.posY = y;
+        ObfuscationReflectionHelper.setPrivateValue(FontRenderer.class, renderer, renderer.posX = x, "field_78295_j");
+        //renderer.posX = x;
+        ObfuscationReflectionHelper.setPrivateValue(FontRenderer.class, renderer, renderer.posY = y, "field_78296_k");
+        //renderer.posY = y;
         if (lines.isEmpty())
         {
             return;
@@ -108,8 +111,10 @@ public class ClientHelper
         renderer.drawString(lines.remove(0), x, y, color);
         for (String line : lines)
         {
-            renderer.posY += renderer.FONT_HEIGHT;
-            renderer.posX = x;
+            ObfuscationReflectionHelper.setPrivateValue(FontRenderer.class, renderer, renderer.posX = x, "field_78295_j");
+            ObfuscationReflectionHelper.setPrivateValue(FontRenderer.class, renderer, renderer.posY += renderer.FONT_HEIGHT, "field_78296_k");
+            //renderer.posY += renderer.FONT_HEIGHT;
+            //renderer.posX = x;
             renderer.renderStringAtPos(line, false);
         }
     }

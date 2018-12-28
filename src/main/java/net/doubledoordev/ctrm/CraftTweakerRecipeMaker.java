@@ -148,11 +148,13 @@ public class CraftTweakerRecipeMaker
             rootFolder.mkdirs();
         }
         Path root = rootFolder.toPath();
-        for (File f : Helper.findXMLFiles(rootFolder, new ArrayList<File>()))
+        for (File f : Helper.findXMLFiles(rootFolder, new ArrayList<>()))
         {
             String path = root.relativize(f.toPath()).toString().replaceFirst("\\\\|/", ":");
             XmlParser.addOverrideXml(new ResourceLocation(path), f);
         }
+        Helper.fillMarkersTreeSet();
+        Helper.makeMissingMarkers();
     }
 
     @Mod.EventHandler

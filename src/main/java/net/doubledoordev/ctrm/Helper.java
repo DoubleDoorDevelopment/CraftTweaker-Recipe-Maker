@@ -35,9 +35,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import com.google.common.io.Files;
 import org.apache.commons.io.FileUtils;
@@ -47,6 +45,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 
+import net.doubledoordev.ctrm.xml.Function;
+import net.doubledoordev.ctrm.xml.Root;
 import net.doubledoordev.ctrm.xml.XmlParser;
 
 /**
@@ -57,21 +57,20 @@ public final class Helper
 {
     public static final String MODID = "ctrm";
     public static final String NAME = "CraftTweakerRecipeMaker";
+    public static final String MARKERBASE = "//#CTRM MARKER ";
+    //TODO: What is this for? Is it needed?
     public static final DateFormat DATE_TIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+    public static TreeSet<Integer> MARKERS = new TreeSet<>();
 
     public static final String DTD = "/assets/ctrm/ctrm.dtd";
 
-    public static final FileFilter FILE_FILTER_XML = new FileFilter()
-    {
-        @Override
-        public boolean accept(File pathname)
-        {
-            return pathname.isDirectory() || FilenameUtils.getExtension(pathname.getName()).equalsIgnoreCase("XML");
-        }
-    };
+    public static final FileFilter FILE_FILTER_XML = pathname -> pathname.isDirectory() || FilenameUtils.getExtension(pathname.getName()).equalsIgnoreCase("XML");
 
     private Helper() {}
 
+    /**
+     * Gets the scripts <file>file</file>
+     */
     public static File getScriptFile() throws IOException
     {
         File file = new File("scripts/", "ctrm.zs");
@@ -84,6 +83,122 @@ public final class Helper
         return file;
     }
 
+    /**
+     * Simple method to get all the lines of the script file.
+     *
+     * @return the script file as a <String>List</String> or null if no lines are found.
+     */
+    public static List<String> getScripLines()
+    {
+        List<String> lines = null;
+        try
+        {
+            // try to read the lines.
+            lines = FileUtils.readLines(getScriptFile(), "UTF-8");
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return lines;
+    }
+
+    /**
+     * Inserts <string>scriptString</string> ALWAYS AFTER <int>markerValue</int>
+     * Does not notify of success or failure.
+     */
+    public static void placeAfterMarker(int markerValue, String scriptString)
+    {
+        List<String> lines = getScripLines();
+        ListIterator<String> i = lines.listIterator();
+        while (i.hasNext())
+        {
+            String line = i.next();
+            // step through each line of the script file to find the marker we need
+            if (line.equals(MARKERBASE + markerValue))
+            {
+                // string is inserted into list, ALWAYS AFTER MARKER!
+                i.add(scriptString);
+                break;
+            }
+        }
+        try
+        {
+            // write back to file the dumpster fire that was created.
+            FileUtils.writeLines(getScriptFile(), lines);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Get the line number of a <int>markerValue</int>
+     *
+     * @return the list as an int, or -1 if none are found.
+     */
+    public static int getMarkerLine(int markerValue)
+    {
+        List<String> lines = getScripLines();
+        ListIterator<String> i = lines.listIterator();
+        while (i.hasNext())
+        {
+            String line = i.next();
+            if (line.equals(MARKERBASE + markerValue))
+            {
+                // return the index of the next line -1, could be done another way I bet but this works.
+                return i.nextIndex() - 1;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Takes all loaded <class>Root</class> elements and gets all the weights
+     * from the <class>Function</class>s provided.
+     */
+    public static void fillMarkersTreeSet()
+    {
+        // Get all the loaded XMLs
+        for (Root roots : XmlParser.getLoadedRootXmls())
+        {
+            // Get all the functions, contains name an weight
+            for (Function func : roots.functionList)
+            {
+                // populate markers with weights.
+                MARKERS.add(func.weight);
+            }
+        }
+    }
+
+    /**
+     * Inserts markers into the script file for us to organize with.
+     * Will only place markers that don't exist.
+     */
+    public static void makeMissingMarkers()
+    {
+        // always start with zero, first marker is 0.
+        int lastExisting = 0;
+
+        for (int marker : MARKERS)
+        {
+            // check to see if the marker is in the file, -1 is a missing marker from getMarkerLine
+            if (getMarkerLine(marker) == -1)
+            {
+                // place the marker in file at the lastexisting marker.
+                placeAfterMarker(lastExisting, MARKERBASE + marker);
+                // make sure to update the last marker as we may need to place after it.
+                lastExisting = marker;
+            }
+            else
+            {
+                // If we find a marker we just update the last marker!
+                lastExisting = marker;
+            }
+        }
+    }
+
     public static BufferedWriter writeHeader(BufferedWriter br, String name) throws IOException
     {
         br.write("// File generated by CraftTweakerRecipeMaker (ctrm) by DoubleDoorDevelopment\r\n");
@@ -91,11 +206,12 @@ public final class Helper
         br.write("// Try not to touch it if you don't absolutely have to.\r\n");
         br.write("// If you have too, leave the markers alone. They look like this:\r\n");
         br.write("//\r\n");
-        br.write("//    #MTRM MARKER <number here>\r\n");
+        br.write("//    #CTRM MARKER <number here>\r\n");
         br.write("//\r\n");
         br.write("// ================================================================================\r\n");
-        br.write("print(\"Loading the CraftTweakerRecipeMaker (ctrm) script file.\");");
+        br.write("print(\"Loading the CraftTweakerRecipeMaker (ctrm) script file.\");\r\n");
         br.write("// HERE BE DRAGONS\r\n\r\n");
+        br.write("//#CTRM MARKER 0\r\n");
         return br;
     }
 
@@ -142,6 +258,7 @@ public final class Helper
                 ""
         ), "\r\n");
         InputStream is = CraftTweakerRecipeMaker.class.getResourceAsStream(DTD);
+        //TODO: Fix this.
         FileUtils.writeStringToFile(file, IOUtils.toString(is).replaceAll("\\r?\\n", "\n"), true);
         is.close();
     }
@@ -174,7 +291,7 @@ public final class Helper
             rootFolder.mkdirs();
         }
         Path root = rootFolder.toPath();
-        List<File> list = Helper.findXMLFiles(rootFolder, new ArrayList<File>());
+        List<File> list = Helper.findXMLFiles(rootFolder, new ArrayList<>());
         list.removeAll(skip);
         for (File f : list)
         {

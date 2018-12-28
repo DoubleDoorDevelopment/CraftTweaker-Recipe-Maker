@@ -110,13 +110,13 @@ public final class XmlParser
                 public void fatalError(SAXParseException exception) throws SAXException
                 {
                     CraftTweakerRecipeMaker.log().error("Caught fatal error trying to parse XML: ", currentlyProcessing);
-                    Throwables.propagate(exception);
+                    Throwables.throwIfUnchecked(exception);
                 }
             });
         }
         catch (Exception e)
         {
-            Throwables.propagate(e);
+            Throwables.throwIfUnchecked(e);
         }
 
         registerType("ctrm", new Root.InstanceCreator());
@@ -134,7 +134,6 @@ public final class XmlParser
 
     private XmlParser()
     {
-
     }
 
     public static <T extends IElementObject> void registerType(String name, IInstanceCreator<T> creator)
@@ -320,6 +319,9 @@ public final class XmlParser
             }
             // Now poke around for new XML files
             Helper.loadOverrides(loadedOverrides);
+            // make sure we refresh all our markers also!
+            Helper.fillMarkersTreeSet();
+            Helper.makeMissingMarkers();
 
             return true;
         }
