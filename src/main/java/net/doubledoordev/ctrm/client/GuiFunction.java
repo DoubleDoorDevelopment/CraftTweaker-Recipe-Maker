@@ -53,33 +53,49 @@ public class GuiFunction extends GuiListBase implements GuiElement.GuiElementCal
 
     public GuiFunction(GuiContainer parent, Function function)
     {
+        // Super??? Does something with the player inventory.
         super(parent.inventorySlots);
+        // stores the passed GuiContainer
         this.parent = parent;
+        // stores teh passed function
         this.function = function;
         StringBuilder textBuilder = new StringBuilder();
+        // loop through functions parts
+        // parts are the XML that defines how the GUI acts and the string that is added to the inputs.
         for (Object obj : function.parts)
         {
+            // if the part is a string, These are the un-editable (red) part of the GUI that make up the whole script.
             if (obj instanceof String)
             {
+                // add the string to the end of the text builder
                 textBuilder.append(obj);
+                // add a new string element to the gui list.
                 guiElements.add(new StringElement(this, (String) obj));
             }
             else
             {
+                // this stores the options for each part.
                 XmlParser.IStringObject sObj = (XmlParser.IStringObject) obj;
+                // adds the sobj to the list of parts.
                 textBuilder.append(sObj.toHumanText());
+                // take the object and convert it into an element to be placed in the gui
                 GuiElement e = sObj.toGuiElement(this);
+                // if the element is not null
                 if (e != null)
                 {
+                    // add the element to the gui list
                     guiElements.add(e);
                 }
                 else
                 {
+                    // otherwise add a new sting element from the string object translated into people speak??? I think this is just a catch for bad entries perhaps?
                     guiElements.add(new StringElement(this, sObj.toHumanText(), 0xFF0000));
                 }
             }
+            // Adds a space to the end of the builder.
             textBuilder.append(' ');
         }
+        // Todo: These are part of the debug
         genericText = textBuilder.toString();
         currentText = "";
     }
@@ -93,6 +109,7 @@ public class GuiFunction extends GuiListBase implements GuiElement.GuiElementCal
         {
             sb.append(obj.save());
         }
+        // TODO: Also part of the debug
         currentText = sb.toString();
     }
 
@@ -164,7 +181,6 @@ public class GuiFunction extends GuiListBase implements GuiElement.GuiElementCal
         // figure out place in file
         // add author + timestamp
 
-        //TODO: use function to get name and weight
         Helper.placeAfterMarker(function.weight, currentText);
         CraftTweakerRecipeMaker.log().info("Saved: {}", currentText);
         this.mc.displayGuiScreen(parent);

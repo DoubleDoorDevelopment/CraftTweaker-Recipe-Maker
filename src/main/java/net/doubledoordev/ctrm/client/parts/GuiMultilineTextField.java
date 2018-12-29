@@ -46,6 +46,7 @@ public class GuiMultilineTextField extends GuiTextField
     private List<String> lines = Lists.newArrayList();
     private float scroll = 0;
 
+    //TODO: This looks like a drawsplit replacement.
     public GuiMultilineTextField(int componentId, FontRenderer fr, int x, int y, int par5Width, int par6Height)
     {
         super(componentId, fr, x, y, par5Width, par6Height);

@@ -71,15 +71,20 @@ public class GuiMain extends GuiListBase
             CraftTweakerRecipeMaker.reloadConfig();
             XmlParser.reload();
         }
+        // Get all the loaded Roots and put em in a list.
         List<Root> roots = XmlParser.getLoadedRootXmls();
+        // Clear the gui.
         guiElements.clear();
+        // for each root in the root list
         for (final Root root : roots)
         {
+            // add a new button element to gui elements with tha root's name as the string
             guiElements.add(new ButtonElement(GuiMain.this, false, root.name)
             {
                 @Override
                 protected void onClick()
                 {
+                    // on click we make a new GUIroot with the name of the root.
                     mc.displayGuiScreen(new GuiRoot(GuiMain.this, root));
                 }
 
@@ -87,6 +92,7 @@ public class GuiMain extends GuiListBase
                 public ArrayList<String> getHoverLines()
                 {
                     ArrayList<String> list = super.getHoverLines();
+                    // if a root is an overrite add a hover text saing so.
                     if (root.isOverride())
                     {
                         list.add(TextFormatting.RED + "Override");

@@ -64,6 +64,7 @@ public class SlotElement extends GuiElement
     protected final boolean oredictRequired;
 
     protected ItemStack stack = ItemStack.EMPTY;
+    protected ItemStack originalStack = ItemStack.EMPTY;
 
     protected int tickCounter;
     protected String oredict; // Current oredic entry.
@@ -183,6 +184,7 @@ public class SlotElement extends GuiElement
     @Override
     protected void onClickOn(int mouseX, int mouseY, int mouseButton)
     {
+        //TODO: Perhaps add another click to bypass oredict?
         super.onClickOn(mouseX, mouseY, mouseButton);
         //Get the held itemstack.
         ItemStack heldStack = mc.player.inventory.getItemStack();
@@ -191,6 +193,7 @@ public class SlotElement extends GuiElement
         {
             // If held stack is not empty set the target spot to held item
             setItemStackOrOredict(heldStack);
+            originalStack = mc.player.inventory.getItemStack();
         }
         // If item stack is empty and clicked with right mouse
         else if (mouseButton == 1)
@@ -258,9 +261,11 @@ public class SlotElement extends GuiElement
                 // Sets the slot to the item.
                 setItemStack(input);
             }
-
-            // set the oredic entry the first option.
-            setOredict(OreDictionary.getOreName(oredictIds[oredictIdCounter]), input);
+            else
+            {
+                // set the oredic entry the first option.
+                setOredict(OreDictionary.getOreName(oredictIds[oredictIdCounter]), input);
+            }
         }
     }
 
@@ -306,7 +311,7 @@ public class SlotElement extends GuiElement
         oredictList = (OreDictionary.getOres(value, false));
 
         stack = inputStack;
-        oredict = "ore:" + value;
+        oredict = "<ore:" + value + ">";
         updateButtonsCallback();
     }
 

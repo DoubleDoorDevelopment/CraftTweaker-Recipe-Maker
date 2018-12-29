@@ -96,6 +96,7 @@ public class ClientHelper
         return list;
     }
 
+    // is GuiMultilineTextField a replacement for this?
     public static void drawSplit(FontRenderer renderer, String text, int width, final int color, int x, int y)
     {
         List<String> lines = split(renderer, text, width);

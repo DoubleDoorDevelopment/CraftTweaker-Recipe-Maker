@@ -111,11 +111,12 @@ public abstract class GuiBase extends GuiContainer
     {
         mc.getTextureManager().bindTexture(INVENTORY);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        // 88 = 176/2 = width of inventory gui
+        // Inventory GUI background, 88 = 176/2 = width of inventory gui
         drawTexturedModalRect(guiLeft + xSize / 2 - 88, guiTop + 200, 0, 0, 176, 90);
 
         mc.getTextureManager().bindTexture(BASE);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        // CTRM GUI background
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, 200);
 
         int left = guiLeft + xSize - 23;
